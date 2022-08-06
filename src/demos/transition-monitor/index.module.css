@@ -1,0 +1,23 @@
+.space-3d {
+  perspective: 500px;
+  perspective-origin: top;
+}
+.container-3d {
+  transform-style: preserve-3d;
+}
+
+.d1 {
+  width: 100px;
+  height: 100px;
+  background: red;
+  transition: transform 1s linear;
+}
+.d2 {
+  width: 100px;
+  height: 100px;
+  background: blue;
+}
+
+.btn {
+  @apply mr-2 bg-black text-white rounded-sm p-1;
+}
