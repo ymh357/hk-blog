@@ -47,7 +47,7 @@ export default function Demo() {
             }
             // 60/s
             const now = [0, 0]
-            const id = window.requestAnimationFrame(step)
+            let id = -1
             function step() {
               if (!d2Ref.current) {
                 return
@@ -61,6 +61,7 @@ export default function Demo() {
               d2Ref.current.style.transform = `rotateX(${now[0]}deg) translateY(${now[1]}px)`
               return window.requestAnimationFrame(step)
             }
+            id = window.requestAnimationFrame(step)
           }}
         >
           js animation

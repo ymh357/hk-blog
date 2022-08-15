@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import React, { ReactNode, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 const getCoordinate = (radius: number, total: number, index: number) => {
   return [
@@ -9,9 +9,9 @@ const getCoordinate = (radius: number, total: number, index: number) => {
 }
 
 // 70是实验值
-const initRotateX = (70 / 360) * Math.PI * 2,
-  initRotateY = 0,
-  initRotateZ = 0
+const initRotateX = (70 / 360) * Math.PI * 2
+const initRotateY = 0
+const initRotateZ = 0
 
 export default function Sphere({
   radius,

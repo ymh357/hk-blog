@@ -16,6 +16,13 @@
   "rules": {
     "no-undef": "off",
     "react-hooks/rules-of-hooks": "error", // 检查 Hook 的规则
-    "react-hooks/exhaustive-deps": "warn" // 检查 effect 的依赖
+    "react-hooks/exhaustive-deps": "warn", // 检查 effect 的依赖
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }
