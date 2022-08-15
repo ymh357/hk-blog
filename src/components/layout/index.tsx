@@ -77,7 +77,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             {`欢迎访问我们的博客～\n希望在这里的时间你可以有所收获\n写的不好的地方希望你能反馈给文章的作者促进我们共同进步。有效建议都会标记在文章中～\n如果博客无法正常显示，请移步到现代浏览器访问～ (拒绝处理兼容问题！)`}
           </InputMonitor>
         ) : (
-          <Skeleton className={clsx('h-96 w-full border border-gray-500 bg-gray-200')} count={1} />
+          <Skeleton className={clsx('h-96 w-full')} count={1} />
         )}
       </div>
     )

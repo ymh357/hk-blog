@@ -42,7 +42,7 @@ export default function HomePage({ data }: { data: Queries.BlogInfoQuery }) {
               })}
           </Masonry>
         ) : (
-          <Skeleton className={clsx('h-48 mb-24 border border-gray-500 bg-gray-200', styles.skeletonCell)} count={8} />
+          <Skeleton className={clsx('h-48 mb-24', styles.skeletonCell)} count={8} />
         )}
       </div>
       <div className="col-span-2 mt-12">
