@@ -8,7 +8,7 @@ import { GatsbyImage } from 'gatsby-plugin-image'
 import React, { ReactNode, useMemo } from 'react'
 import InputMonitor from '../input-monitor'
 
-import favIcon from '@/images/favIcon.png'
+import favIcon from '@/images/favicon.png'
 import * as styles from './index.module.css'
 
 const shortcodes = { Link }
