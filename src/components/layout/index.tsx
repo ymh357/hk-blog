@@ -9,6 +9,7 @@ import React, { ReactNode, useMemo } from 'react'
 import InputMonitor from '../input-monitor'
 
 import favIcon from '@/images/favicon.png'
+import Skeleton from '../skeleton'
 import * as styles from './index.module.css'
 
 const shortcodes = { Link }
@@ -71,9 +72,13 @@ export default function Layout({ children }: { children: ReactNode }) {
   const Description = useMemo(() => {
     return (
       <div className={clsx('mt-24 text-gray-500 text-t3l whitespace-pre-line')}>
-        <InputMonitor speed={50}>
-          {`欢迎访问我们的博客～\n希望在这里的时间你可以有所收获\n写的不好的地方希望你能反馈给文章的作者促进我们共同进步。有效建议都会标记在文章中～\n如果博客无法正常显示，请移步到现代浏览器访问～ (拒绝处理兼容问题！)`}
-        </InputMonitor>
+        {typeof window !== 'undefined' ? (
+          <InputMonitor speed={50}>
+            {`欢迎访问我们的博客～\n希望在这里的时间你可以有所收获\n写的不好的地方希望你能反馈给文章的作者促进我们共同进步。有效建议都会标记在文章中～\n如果博客无法正常显示，请移步到现代浏览器访问～ (拒绝处理兼容问题！)`}
+          </InputMonitor>
+        ) : (
+          <Skeleton className={clsx('h-96 w-full border border-gray-500 bg-gray-200')} count={1} />
+        )}
       </div>
     )
   }, [])

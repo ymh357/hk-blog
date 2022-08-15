@@ -1,10 +1,11 @@
+import Skeleton from '@/components/skeleton'
 import Tag from '@/components/tag'
 import clsx from 'clsx'
 import ArticleAbstract from 'Components/article-abstract'
 import Masonry from 'Components/masonry'
 import { graphql, navigate } from 'gatsby'
 import React, { useMemo, useState } from 'react'
-import { articleCard } from './index.module.css'
+import * as styles from './index.module.css'
 export default function HomePage({ data }: { data: Queries.BlogInfoQuery }) {
   console.log('data2: ', data)
   const tags = useMemo(() => {
@@ -19,26 +20,30 @@ export default function HomePage({ data }: { data: Queries.BlogInfoQuery }) {
   return (
     <>
       <div className="col-span-7 relative box-content text-center mt-12 bg-gray-50">
-        <Masonry>
-          {data?.allMdx?.nodes
-            ?.filter(({ frontmatter }) => !chosenTags.length || chosenTags.includes(frontmatter?.tag || ''))
-            ?.map(({ slug, frontmatter, excerpt }) => {
-              console.log('slug: ', slug)
-              return (
-                <ArticleAbstract
-                  key={slug}
-                  className={clsx(articleCard, 'inline-block flex-none p-5 mr-6 mb-5')}
-                  title={frontmatter?.title || ''}
-                  author={frontmatter?.author}
-                  date={frontmatter?.date}
-                  content={excerpt || ''}
-                  onClick={() => {
-                    navigate(`/blog/${slug}`)
-                  }}
-                />
-              )
-            })}
-        </Masonry>
+        {typeof window !== 'undefined' ? (
+          <Masonry>
+            {data?.allMdx?.nodes
+              ?.filter(({ frontmatter }) => !chosenTags.length || chosenTags.includes(frontmatter?.tag || ''))
+              ?.map(({ slug, frontmatter, excerpt }) => {
+                console.log('slug: ', slug)
+                return (
+                  <ArticleAbstract
+                    key={slug}
+                    className={clsx(styles.articleCard, 'inline-block flex-none p-5 mr-6 mb-5')}
+                    title={frontmatter?.title || ''}
+                    author={frontmatter?.author}
+                    date={frontmatter?.date}
+                    content={excerpt || ''}
+                    onClick={() => {
+                      navigate(`/blog/${slug}`)
+                    }}
+                  />
+                )
+              })}
+          </Masonry>
+        ) : (
+          <Skeleton className={clsx('h-48 mb-24 border border-gray-500 bg-gray-200', styles.skeletonCell)} count={8} />
+        )}
       </div>
       <div className="col-span-2 mt-12">
         <div className=" flex flex-wrap items-center p-8">
