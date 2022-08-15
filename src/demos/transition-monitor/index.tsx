@@ -1,7 +1,6 @@
-import React from 'react'
-import { useRef } from 'react'
-import { space3d, container3d, d1, d2, btn } from './index.module.css'
-export default function () {
+import React, { useRef } from 'react'
+import { btn, container3d, d1, d2, space3d } from './index.module.css'
+export default function Demo() {
   const d1Ref = useRef<HTMLDivElement>(null)
   const d2Ref = useRef<HTMLDivElement>(null)
   return (
@@ -47,7 +46,7 @@ export default function () {
               return
             }
             // 60/s
-            let now = [0, 0]
+            const now = [0, 0]
             const id = window.requestAnimationFrame(step)
             function step() {
               if (!d2Ref.current) {

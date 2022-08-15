@@ -9,7 +9,7 @@ export interface IMasonry {
 const getHeights = (arr: HTMLElement[][]) => {
   return arr.map((subArr) =>
     subArr.reduce((acc, cur) => {
-      return acc + cur.offsetHeight
+      return acc + cur.offsetHeight + +window.getComputedStyle(cur).marginBottom.slice(0, 2)
     }, 0)
   )
 }
@@ -27,25 +27,57 @@ const getMinimumIndex = (arr: number[]) => {
 }
 
 export default function Masonry({ className, children }: IMasonry) {
-  const fakeContainerRef = useRef<HTMLDivElement | null>(null)
-  const realContainerRef = useRef<HTMLDivElement | null>(null)
+  const containerRef = useRef<HTMLDivElement | null>(null)
   const containerWidthRef = useRef(-1)
   const observerRef = useRef<ResizeObserver>()
+  const childrenChanged = useRef(false)
+
+  useEffect(() => {
+    if (containerRef.current) {
+      ;[].forEach.call(containerRef.current.children, (child: HTMLElement, index) => {
+        child.setAttribute('data-index', '' + index)
+        child.style.position = 'absolute'
+        child.style.transition = 'left ease 300ms, top ease 300ms'
+        if (child.style.left) {
+          return
+        }
+        child.style.left = '0'
+        child.style.top = '0'
+      })
+    }
+    if (children) {
+      childrenChanged.current = true
+    }
+  }, [children])
 
   const setupBlocks = useCallback((width: number) => {
-    const container = fakeContainerRef.current?.children?.length ? fakeContainerRef.current : realContainerRef.current
+    const container = containerRef.current
     if (!container || !container.children.length) {
       console.log('container: ', container)
       console.log('container.children.length: ', container?.children?.length)
       return
     }
+    const marginRight = +(
+      window.getComputedStyle(container.firstElementChild as HTMLElement)?.marginRight?.match(/\d+/)?.[0] || 0
+    )
+    console.log('marginRight: ', marginRight)
 
-    const colAmount = Math.floor(width / (container.firstElementChild as HTMLElement).offsetWidth)
-    console.log('width: ', width)
+    const offsetWidth = (container.firstElementChild as HTMLElement).offsetWidth
+    console.log('offsetWidth xx: ', offsetWidth)
+
+    // 二元一次方程
+    const colAmount = Math.floor(
+      (width + marginRight) / ((container.firstElementChild as HTMLElement).offsetWidth + marginRight)
+    )
+    const innerWidth = offsetWidth * colAmount + marginRight * (colAmount - 1)
+    console.log('innerWidth: ', innerWidth)
+    const space = (width - innerWidth) / 2
+    console.log('space: ', space)
     console.log(
       '(container.firstElementChild as HTMLElement).offsetWidth: ',
       (container.firstElementChild as HTMLElement).offsetWidth
     )
+    // debugger
     const result: HTMLElement[][] = []
     for (let i = 0; i < colAmount; i++) {
       result.push([])
@@ -59,68 +91,60 @@ export default function Masonry({ className, children }: IMasonry) {
       result[getMinimumIndex(getHeights(result))].push(child)
     })
     console.log('result: ', result)
-    const ordered: HTMLElement[] = []
     result.forEach((col, colIndex) => {
       let heightNow = 0
-      col.forEach((item, rowIndex) => {
-        item.style.transition = 'left ease 300ms, top ease 300ms'
-        item.style.position = 'absolute'
-        item.style.display = 'inline-block'
-        item.style.left = `${
-          colIndex * (item.offsetWidth + +(window.getComputedStyle(item)?.marginRight?.match(/\d+/)?.[0] || 0))
-        }px`
+      col.forEach((item) => {
+        item.style.left = `${space + colIndex * (offsetWidth + marginRight)}px`
         item.style.top = `${heightNow}px`
         heightNow += item.offsetHeight + +(window.getComputedStyle(item)?.marginBottom?.match(/\d+/)?.[0] || 0)
-
-        if (!realContainerRef.current) {
-          console.log('no real ref')
-          return
-        }
-        ordered[rowIndex * result.length + colIndex] = item
-        console.log('rowIndex * result.length + colIndex: ', rowIndex * result.length + colIndex)
+        // if (colIndex === result.length - 1) {
+        //   item.style.marginRight = '0'
+        // }
       })
     })
-    console.log('ordered: ', ordered)
 
-    ordered.forEach((item) => {
-      // TODO: why realContainerRef.current.contains(item) necessary?
-      if (realContainerRef.current && !realContainerRef.current.contains(item)) {
-        realContainerRef.current.append(item)
-      }
-    })
-    if (realContainerRef.current) {
-      realContainerRef.current.style.height = `${Math.max(...getHeights(result))}px`
+    if (containerRef.current) {
+      containerRef.current.style.height = `${Math.max(...getHeights(result))}px`
     }
   }, [])
 
-  const resizeCallback: ResizeObserverCallback = (entries, observer) => {
-    console.log('entries: ', entries)
-    let containerWidth
-    for (const entry of entries) {
-      containerWidth = entry.contentRect.width
-    }
-    if (!containerWidth) {
-      console.log('containerWidth: ', containerWidth)
-      return
-    }
-    console.log('setup')
-    if (containerWidthRef.current === containerWidth) {
-      console.log('containerWidthRef.current === containerWidth: ', containerWidthRef.current === containerWidth)
-      // ResizeObserver's strange behaviour. Only when callback finishes, next callback starts.
-      return
-    }
-    containerWidthRef.current = containerWidth
-    setupBlocks(containerWidth)
-  }
+  const resizeCallback: ResizeObserverCallback = useCallback(
+    (entries, observer) => {
+      console.log('entries: ', entries)
+      let containerWidth
+      for (const entry of entries) {
+        containerWidth = entry.contentRect.width
+      }
+      if (!containerWidth) {
+        console.log('containerWidth: ', containerWidth)
+        return
+      }
+      if (!childrenChanged.current && containerWidthRef.current === containerWidth) {
+        console.log('containerWidthRef.current === containerWidth: ', containerWidthRef.current === containerWidth)
+        // To solve ResizeObserver's strange behaviour.
+        // Solution: Only when callback finishes, next callback starts.
+        return
+      }
+      console.log('cb happens')
+      if (childrenChanged.current) {
+        childrenChanged.current = false
+      }
+      containerWidthRef.current = containerWidth
+      setupBlocks(containerWidth)
+    },
+    [setupBlocks]
+  )
 
   useEffect(() => {
-    if (!realContainerRef.current) {
+    if (!containerRef.current) {
       console.log('no real ref to observe')
       return
     }
+    if (!observerRef.current) {
+      observerRef.current = new ResizeObserver(debounce(resizeCallback, 10))
+    }
+    observerRef.current.observe(containerRef.current)
     console.log('observe...')
-    observerRef.current = new ResizeObserver(debounce(resizeCallback, 10))
-    observerRef.current.observe(realContainerRef.current)
 
     return () => {
       if (observerRef.current) {
@@ -128,16 +152,12 @@ export default function Masonry({ className, children }: IMasonry) {
         observerRef.current.disconnect()
       }
     }
-  }, [setupBlocks])
+  }, [resizeCallback, children])
 
   return (
-    <>
-      <div className={clsx('relative w-full', className)} ref={realContainerRef} />
-
-      <div className={clsx('absolute opacity-0 w-full', className)} ref={fakeContainerRef}>
-        {children}
-      </div>
-    </>
+    <div className={clsx('relative box-border', className)} ref={containerRef}>
+      {children}
+    </div>
   )
 }
 

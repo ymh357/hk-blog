@@ -3,10 +3,13 @@ module.exports = {
     './src/pages/**/*.{js,jsx,ts,tsx}',
     './src/components/**/*.{js,jsx,ts,tsx}',
     './src/demos/**/*.{js,jsx,ts,tsx}',
-    './blog/post/**/*.mdx',
+    './blog/**/*.mdx',
   ],
   theme: {
     extend: {
+      borderRadius: {
+        half: '50%',
+      },
       lineClamp: {
         7: '7',
         8: '8',

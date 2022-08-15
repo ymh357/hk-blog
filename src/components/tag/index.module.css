@@ -1,0 +1,9 @@
+.tag {
+  font-size: 16px;
+  line-height: 1em;
+  transform: skew(-20deg);
+}
+
+.chosen {
+  @apply text-gray-200 bg-gray-700;
+}

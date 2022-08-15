@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 
-export default function InputMonitor({ children }: { children: ReactNode }) {
+export default function InputMonitor({ children, speed }: { children: ReactNode; speed?: number }) {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const [filledInput, setFilledInput] = useState('')
 
@@ -11,6 +11,20 @@ export default function InputMonitor({ children }: { children: ReactNode }) {
   const editable = useMemo(() => {
     return filledInput !== children
   }, [children, filledInput])
+
+  useEffect(() => {
+    if (!editable && containerRef.current) {
+      containerRef.current.style.height = 'auto'
+    }
+  }, [editable])
+
+  useEffect(() => {
+    if (!containerRef.current) {
+      return
+    }
+
+    containerRef.current.style.height = containerRef.current.offsetHeight + 'px'
+  }, [])
 
   useEffect(() => {
     if (containerRef.current && filledInput) {
@@ -26,29 +40,38 @@ export default function InputMonitor({ children }: { children: ReactNode }) {
   useEffect(() => {
     let cur = ''
     // eslint-disable-next-line prefer-const
-    let rafId: number
+    let taskId: number
     let nextCharacter: string
     containerRef.current?.focus()
+
+    const startTask = speed
+      ? (task: Function) => {
+          return setTimeout(task, speed)
+        }
+      : requestAnimationFrame
+    const cancelTask = speed ? clearTimeout : cancelAnimationFrame
+
     const frameCb = () => {
       nextCharacter = getNextCharacter(cur, children as string)
       if (nextCharacter === '') {
-        window.cancelAnimationFrame(rafId)
+        console.log('wtf')
+        cancelTask(taskId)
         return
       }
       cur = `${cur}${nextCharacter}`
       setFilledInput((prev) => `${prev}${nextCharacter}`)
-      return window.requestAnimationFrame(frameCb)
+      return startTask(frameCb)
     }
-    rafId = window.requestAnimationFrame(frameCb)
+    taskId = startTask(frameCb)
 
     return () => {
-      window.cancelAnimationFrame(rafId)
+      cancelTask(taskId)
     }
-  }, [children])
+  }, [children, speed])
 
   return (
     <div suppressContentEditableWarning ref={containerRef} contentEditable={editable} className="outline-none">
-      {filledInput}
+      {filledInput || children}
     </div>
   )
 }

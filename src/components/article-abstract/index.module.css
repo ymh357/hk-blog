@@ -1,3 +1,13 @@
-.container{
+.container {
   box-shadow: 1px 1px 1px #efefef;
+}
+
+.avatar {
+  transform: translate(-8px, -8px);
+  transform-origin: top left;
+}
+
+.date {
+  transform: translate(8px, -8px) scale(0.83);
+  transform-origin: top right;
 }

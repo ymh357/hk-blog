@@ -9,11 +9,16 @@ const config: GatsbyConfig = {
       {
         name: 'H',
         // avatar: 'https://www.gravatar.com/userimage/223753460/beb7a6e2969fd36c3ffec54b790fb67c',
-        // avatar: 'Images/hao-avatar.jpeg',
+        avatar: 'hao-avatar.jpeg',
+        path: '/hao/',
+        github: 'https://github.com/ymh357',
+        email: 'ymhyzq@163.com',
+        am: 'about myself here',
       },
       {
         name: 'K',
-        // avatar: 'Images/kun-avatar.jpeg',
+        avatar: 'kun-avatar.jpeg',
+        path: '/kun/',
         // avatar: 'https://www.gravatar.com/userimage/223753460/5ccb74321ab78755b7c45816aa693144',
       },
     ],
@@ -78,6 +83,16 @@ const config: GatsbyConfig = {
       },
     },
     'gatsby-transformer-sharp',
+    'gatsby-plugin-react-helmet',
+    {
+      resolve: 'gatsby-plugin-manifest',
+      options: {
+        name: 'hk blog',
+        short_name: 'hk blog',
+        start_url: '/',
+        icon: 'src/images/favicon.png', // This path is relative to the root of the site.
+      },
+    },
   ],
 }
 
