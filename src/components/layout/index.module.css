@@ -1,0 +1,20 @@
+:global(html) {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+:global(body) {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+:global(html::-webkit-scrollbar) {
+  display: none;
+}
+
+:global(body::-webkit-scrollbar) {
+  display: none;
+}
+
+.authorName {
+  transform: translateZ(45deg);
+}

@@ -1,0 +1,7 @@
+# Ignore artifacts:
+.cache
+node_modules
+public
+package.json
+package-lock.json
+src/gatsby-types.d.ts

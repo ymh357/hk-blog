@@ -1,5 +1,5 @@
-import * as React from "react"
-import { graphql, PageProps } from "gatsby"
+import { graphql, PageProps } from 'gatsby'
+import * as React from 'react'
 
 const TypegenPage = ({ data }: PageProps<Queries.TypegenPageQuery>) => {
   return (

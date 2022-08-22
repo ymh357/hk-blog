@@ -1,0 +1,8 @@
+.articleContainer {
+  h1 {
+    @apply text-center text-t1 mb-8;
+  }
+  p {
+    @apply mb-4 mt-4 text-base leading-8;
+  }
+}
