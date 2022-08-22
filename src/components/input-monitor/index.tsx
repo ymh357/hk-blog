@@ -71,7 +71,7 @@ export default function InputMonitor({ children, speed }: { children: ReactNode;
 
   return (
     <div suppressContentEditableWarning ref={containerRef} contentEditable={editable} className="outline-none">
-      {filledInput || children}
+      {filledInput}
     </div>
   )
 }

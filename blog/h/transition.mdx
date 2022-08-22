@@ -10,7 +10,7 @@ import Demo from 'Demos/transition-monitor'
 # css transform transition
 
 1. transform 有顺序 比如 translateX rotateY 和 rotateY rotateX 结果不同
-2. transform 可重复定义同一个变换 比如 rotataX(-1) rotateX(1) 会恢复原状。transform 是欧拉角的定义：从初始状态，依次经过定义的变换，得到最终状态。也因为这个，会有万象死锁。比如 rotateX(n) rotateY(90deg) rotateZ(m)之后，x 和 y 轴会重叠。
+2. transform 可重复定义同一个变换 比如 rotataX(-1) rotateX(1) 会恢复原状。transform 是欧拉角的定义：从初始状态，依次经过定义的变换，得到最终状态。这里的变换是基于物体坐标系，但实际的效果我们会根据世界坐标系来看，因此会有万象死锁的情况发生（世界坐标系中缺少一个旋转自由度（只转了两个坐标系））。比如 rotateX(n) rotateY(90deg) rotateZ(m)之后，x 和 y 轴会重叠。参考：https://www.daimajiaoliu.com/daima/4eddfa48b100400。
 3. transition，从现象看是多个变换同时进行，而非先完成某个变换，再进行下个变换。经实验，其效果和将变换值等分为 1 个 frame，然后依次渲染相同。
 
 <Demo />

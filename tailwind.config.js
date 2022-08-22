@@ -3,6 +3,9 @@ module.exports = {
     './src/pages/**/*.{js,jsx,ts,tsx}',
     './src/components/**/*.{js,jsx,ts,tsx}',
     './src/demos/**/*.{js,jsx,ts,tsx}',
+    './src/utils/**/*.{js,jsx,ts,tsx}',
+    './src/hooks/**/*.{js,jsx,ts,tsx}',
+    './src/hocs/**/*.{js,jsx,ts,tsx}',
     './blog/**/*.mdx',
   ],
   theme: {
