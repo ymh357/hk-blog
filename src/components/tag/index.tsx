@@ -20,11 +20,11 @@ export default function Tag({
       onClick={() => {
         onToggleChoose(value)
       }}
-      className={clsx('rounded-md p-2 bg-gray-200 text-gray-700 mr-4 mb-8 hover:cursor-pointer', styles.tag, {
+      className={clsx('rounded-md p-2 bg-gray-200 text-gray-700 mr-4 mb-4 hover:cursor-pointer', styles.tag, {
         [styles.chosen]: chosen,
       })}
     >
-      #{value}
+      # {value}
     </div>
   )
 }

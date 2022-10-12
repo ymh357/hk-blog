@@ -1,0 +1,32 @@
+.switch-ui {
+  &::before {
+    content: '';
+    @apply absolute w-full h-full rounded-half top-0 bg-inherit;
+    left: -50%;
+  }
+
+  &::after {
+    content: '';
+    @apply absolute w-full h-full rounded-half top-0 bg-inherit;
+    right: -50%;
+  }
+
+  > span {
+    z-index: 1;
+    transition: transform 300ms linear;
+    transform-origin: center;
+  }
+
+  &.on {
+    > span {
+      transform: translateX(50%) scale(87.5%) translateX(7.14%);
+      @apply bg-red-500;
+    }
+  }
+  &.off {
+    > span {
+      transform: translateX(-50%) scale(87.5%) translateX(-7.14%) rotate(180deg);
+      @apply bg-gray-500;
+    }
+  }
+}

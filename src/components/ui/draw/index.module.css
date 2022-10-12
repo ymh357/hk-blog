@@ -1,0 +1,13 @@
+@keyframes flowDown {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(100%);
+  }
+}
+
+.content {
+  transform-origin: top;
+  animation: flowDown 300ms ease;
+}

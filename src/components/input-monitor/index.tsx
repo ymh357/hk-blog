@@ -54,7 +54,6 @@ export default function InputMonitor({ children, speed }: { children: ReactNode;
     const frameCb = () => {
       nextCharacter = getNextCharacter(cur, children as string)
       if (nextCharacter === '') {
-        console.log('wtf')
         cancelTask(taskId)
         return
       }

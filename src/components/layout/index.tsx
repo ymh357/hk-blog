@@ -56,12 +56,12 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   const extra = useLatency()
 
-  const avatar = useGetAvatars()
+  const avatars = useGetAvatars()
 
   const Header = useMemo(() => {
     return (
       <h1 className="text-t1 flex items-center justify-center">
-        {avatar?.map(({ name, imageData, path }, index) => {
+        {avatars?.map(({ name, imageData, path }, index) => {
           if (!name || !imageData) {
             return null
           }
@@ -71,7 +71,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                 <GatsbyImage className={clsx('rounded-half w-24 mb-4')} image={imageData} alt={`${name} 's avatar`} />
                 <span className={styles.authorName}>{name}</span>
               </Link>
-              {index < avatar.length - 1 && (
+              {index < avatars.length - 1 && (
                 <Link to={'/'} className="justify-end mt-auto w-24 h-24">
                   <span
                     className="bg-center bg-contain bg-no-repeat w-full h-full inline-block"
@@ -86,7 +86,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         })}
       </h1>
     )
-  }, [avatar])
+  }, [avatars])
 
   const Description = useMemo(() => {
     return (
