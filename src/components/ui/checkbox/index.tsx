@@ -18,7 +18,7 @@ export default function CheckBox({
     <span
       onClick={() => onToggle(!checked)}
       className={clsx(
-        'relative w-4 h-4 inline-block bg-gray-100 rounded',
+        'relative w-4 h-4 inline-block bg-gray-100 rounded cursor-pointer',
         {
           [styles.checked]: checked,
         },

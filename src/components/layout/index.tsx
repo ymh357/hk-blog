@@ -10,7 +10,7 @@ import React, { ReactNode, useMemo } from 'react'
 import useLatency from '@/hooks/use-latency'
 import favIcon from '@/images/favicon.png'
 import InputMonitor from '../input-monitor'
-import * as styles from './index.module.css'
+import './index.css'
 
 const shortcodes = { Link }
 
@@ -69,7 +69,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             <span key={name} className="flex items-center">
               <Link to={path || '/'} className="text-t1 flex flex-col justify-center items-center ml-8 mr-8">
                 <GatsbyImage className={clsx('rounded-half w-24 mb-4')} image={imageData} alt={`${name} 's avatar`} />
-                <span className={styles.authorName}>{name}</span>
+                <span className="author-name">{name}</span>
               </Link>
               {index < avatars.length - 1 && (
                 <Link to={'/'} className="justify-end mt-auto w-24 h-24">

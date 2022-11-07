@@ -1,7 +1,7 @@
 import { Moment } from 'moment'
 import React, { useMemo } from 'react'
 import CheckBox from '../ui/checkbox'
-import Draw from '../ui/draw'
+import Drawer from '../ui/drawer'
 
 const getAllMonthsFromYear = (year: number, data: Record<number, Record<number, number>>) => {
   return Object.keys(data[year]).map((m) => year + ' ' + m)
@@ -36,7 +36,7 @@ export default function DateFilter({
       {Object.keys(data).map((yearKey) => {
         const monthData = data[+yearKey]
         return (
-          <Draw
+          <Drawer
             key={yearKey}
             titleDom={
               <div className="flex items-center">
@@ -62,7 +62,7 @@ export default function DateFilter({
                 </div>
               ))}
             </div>
-          </Draw>
+          </Drawer>
         )
       })}
     </div>

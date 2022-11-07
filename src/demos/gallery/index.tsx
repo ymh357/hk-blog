@@ -1,6 +1,6 @@
 import CheckBox from '@/components/ui/checkbox'
+import Drawer from '@/components/ui/drawer'
 import Switch from '@/components/ui/switch'
-import Draw from 'Components/ui/draw'
 
 import React, { useState } from 'react'
 
@@ -13,10 +13,10 @@ export default function Gallery() {
       <Switch on={on} onToggle={toggle} />
       <CheckBox name={'cb1'} checked={checked} onToggle={setChecked} />
 
-      <Draw titleDom={<div>title</div>}>
+      <Drawer titleDom={<div>title</div>}>
         <div>child 1</div>
         <div>child 2</div>
-      </Draw>
+      </Drawer>
     </div>
   )
 }

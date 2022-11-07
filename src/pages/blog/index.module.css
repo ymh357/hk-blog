@@ -1,8 +1,59 @@
 .articleContainer {
   h1 {
-    @apply text-center text-t1 mb-8;
+    font-size: 1.75rem;
   }
-  p {
-    @apply mb-4 mt-4 text-base leading-8;
+
+  code,
+  pre,
+  code[class*='language-'],
+  pre[class*='language-'] {
+    font-size: 0.95em;
+  }
+
+  pre {
+    margin-bottom: 1.45rem !important;
+  }
+
+  ul,
+  ol {
+    list-style-type: auto;
+  }
+
+  blockquote {
+    color: #888;
+    border-left: 0;
+    padding: 1.5em 1.1em 1.5em 1.1em;
+    margin-left: 0;
+    margin-right: 0;
+    position: relative;
+    font-size: 1rem;
+    font-style: normal;
+
+    ul {
+      margin-left: 2.45rem;
+    }
+
+    &::before {
+      color: #888;
+      content: '\201C';
+      font-size: 5em;
+      position: absolute;
+      left: -15px;
+      top: 30px;
+      line-height: 0.1em;
+      font-family: sans-serif;
+      font-style: italic;
+    }
+    &::after {
+      color: #888;
+      content: '\201D';
+      font-size: 5em;
+      position: absolute;
+      right: 10px;
+      bottom: -30px;
+      line-height: 0.1em;
+      font-family: sans-serif;
+      font-style: italic;
+    }
   }
 }

@@ -3,7 +3,7 @@ import React, { ReactElement, useState } from 'react'
 
 import * as styles from './index.module.css'
 
-export default function Draw({
+export default function Drawer({
   titleDom,
   children,
   direction = 'verticle',
@@ -17,7 +17,7 @@ export default function Draw({
     <div>
       <div className="flex items-center">
         <span
-          className="mr-2 w-4 h-4"
+          className="mr-2 w-4 h-4 cursor-pointer"
           onClick={() => {
             setShowChildren(!showChildren)
           }}
