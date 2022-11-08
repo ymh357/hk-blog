@@ -13,12 +13,12 @@ export default function Article({ data }: { data: Queries.BlogPageQuery }) {
   if (!data?.mdx?.frontmatter) {
     return null
   }
-  const multipleHeadings = data?.mdx?.headings?.length
+  const multipleHeadings = data?.mdx?.headings?.length > 1
   return (
     <div
       className={clsx('pt-12 pl-16 pr-16', styles.articleContainer, {
         'col-span-9': !multipleHeadings,
-        'col-span-3': multipleHeadings,
+        'col-span-6': multipleHeadings,
       })}
     >
       <h1>{data?.mdx?.frontmatter?.title}</h1>

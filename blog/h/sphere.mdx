@@ -8,10 +8,8 @@
 import Sphere from 'Components/sphere'
 import ArticleAbstract from 'Components/article-abstract'
 
-# 自制球体卡片环绕
-
 <Sphere radius={350} total={12} className="flex items-center justify-center h-screen">
   {new Array(12).fill(undefined).map((_, i) => (
-    <ArticleAbstract key={i} className="w-40 h-40 bg-red-300" content={' '} />
+    <ArticleAbstract key={i} className="w-40 h-40 bg-red-300" />
   ))}
 </Sphere>

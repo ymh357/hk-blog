@@ -22,10 +22,6 @@ export default function ArticleAbstract({
 }) {
   const avatars = useGetAvatars()
 
-  if (!content) {
-    return null
-  }
-
   const avatar = avatars?.find(({ name }) => name === author)
 
   return (
